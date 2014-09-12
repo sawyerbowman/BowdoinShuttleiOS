@@ -8,8 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import <GoogleMaps/GoogleMaps.h>
+#import "ShuttlePopover.h"
+#import "PopoverView.h"
 
-@interface BowdoinShuttleViewController : UIViewController
+@interface BowdoinShuttleViewController : UIViewController <PopoverViewDelegate, UITableViewDataSource, UITableViewDelegate> {
+    
+    PopoverView *pv;
+    
+    UILabel *tapAnywhereLabel;
+    CGPoint point;
+}
+
 @property (nonatomic, strong) GMSCameraPosition *camera;
 @property (nonatomic, strong) NSTimer *timer;
 @property (nonatomic, strong) GMSMarker *marker;
@@ -20,11 +29,17 @@
 @property NSTimeInterval timeInterval;
 
 @property bool curSet;
+@property bool testing;
 @property bool firstTimeThrough;
 @property bool follow;
 
 @property double rise;
 @property double run;
+
+@property NSString *selectedShuttle;
+
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *followButton;
+
 
 - (IBAction)followShuttle:(id)sender;
 
