@@ -25,6 +25,7 @@
     mapView_ = [GMSMapView mapWithFrame:CGRectZero camera:self.camera];
     mapView_.myLocationEnabled = YES;
     mapView_.settings.myLocationButton = YES;
+    mapView_.settings.rotateGestures = NO;
     self.view = mapView_;
     // Creates a marker in the map.
     self.marker = [[GMSMarker alloc] init];
