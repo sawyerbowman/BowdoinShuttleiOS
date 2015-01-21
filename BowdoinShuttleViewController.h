@@ -42,6 +42,7 @@
 
 
 - (IBAction)followShuttle:(id)sender;
++ (bool)isRunning;
 
 
 @end

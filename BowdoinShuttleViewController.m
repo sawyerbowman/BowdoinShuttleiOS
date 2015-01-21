@@ -42,7 +42,7 @@
     //[self updateMap];
     self.timer = [NSTimer scheduledTimerWithTimeInterval:.05 target:self selector:@selector(updateMapWithMotion) userInfo:nil repeats:YES];
     // display warning if not running
-    [self isRunning];
+    [BowdoinShuttleViewController isRunning];
 }
 
 /*
@@ -159,7 +159,7 @@
  *This method determines whether the shuttle is running based on the current day and time.
  */
 
--(void)isRunning
++ (bool)isRunning
 {
     NSDate *today = [NSDate date];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -175,14 +175,17 @@
         if (currentHour < 18 && currentHour > 3){
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"The Shuttle is not running right now." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
             [alert show];
+            return false;
         }
     }
     else {
         if (currentHour < 18 && currentHour > 02) {
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"The Shuttle is not running right now." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
             [alert show];
+            return false;
         }
     }
+    return true;
 }
 
 /*

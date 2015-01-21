@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="kG4-J0-zZY">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="kG4-J0-zZY">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <scenes>
         <!--Tab Bar Controller-->
@@ -26,14 +26,13 @@
             </objects>
             <point key="canvasLocation" x="534" y="45"/>
         </scene>
-        <!--Navigation Controller - Map-->
+        <!--Map-->
         <scene sceneID="UFh-XV-UCt">
             <objects>
                 <navigationController definesPresentationContext="YES" id="aw8-8j-AIX" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Map" id="iYZ-ru-Eaa"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="mh8-Ij-Z9S">
-                        <rect key="frame" x="0.0" y="0.0" width="0.0" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -44,7 +43,7 @@
             </objects>
             <point key="canvasLocation" x="1064" y="-238"/>
         </scene>
-        <!--Request View Controller - Make Request-->
+        <!--Make Request-->
         <scene sceneID="IVy-MC-5KX">
             <objects>
                 <tableViewController id="HY5-jd-hPo" customClass="RequestViewController" sceneMemberID="viewController">
@@ -58,7 +57,6 @@
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1oZ-24-hzC">
                                     <rect key="frame" x="129" y="39" width="63" height="30"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="18"/>
                                     <state key="normal" title="Submit"/>
                                     <connections>
@@ -80,7 +78,6 @@
                                             <subviews>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0JV-N8-tks">
                                                     <rect key="frame" x="20" y="7" width="280" height="30"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                     <connections>
@@ -103,7 +100,6 @@
                                             <subviews>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WA1-d1-ir1">
                                                     <rect key="frame" x="20" y="7" width="280" height="30"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                     <connections>
@@ -250,7 +246,7 @@
             </objects>
             <point key="canvasLocation" x="2731" y="343"/>
         </scene>
-        <!--Call List View Controller - Call List-->
+        <!--Call List-->
         <scene sceneID="d7d-XJ-KUi">
             <objects>
                 <tableViewController id="TCm-bl-Jbs" customClass="CallListViewController" sceneMemberID="viewController">
@@ -303,14 +299,12 @@
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Thank you for your submission!" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="URB-8J-6Ss">
                                 <rect key="frame" x="20" y="42" width="280" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="textColor" red="0.0015835898228712807" green="0.76566485969387754" blue="0.0024569706498711501" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="18"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="cJ2-F6-hFG">
                                 <rect key="frame" x="40" y="80" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <string key="text">Your request has been processed and assigned to a shuttle. Please visit the route page to see more information about where each shuttle is going and how long the wait is.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -318,7 +312,6 @@
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1tR-jZ-3G4">
                                 <rect key="frame" x="145" y="299" width="30" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="18"/>
                                 <state key="normal" title="OK"/>
                                 <connections>
@@ -333,7 +326,7 @@
             </objects>
             <point key="canvasLocation" x="2731" y="1003"/>
         </scene>
-        <!--Info View Controller - Info-->
+        <!--Info-->
         <scene sceneID="3QF-Rs-X2y">
             <objects>
                 <viewController id="Q2A-5C-H2K" customClass="InfoViewController" sceneMemberID="viewController">
@@ -347,62 +340,47 @@
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Shuttle Service Hours" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1aA-j4-d1Q">
                                 <rect key="frame" x="19" y="97" width="173" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="16"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Your Drivers" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Pc2-58-OhY">
                                 <rect key="frame" x="19" y="168" width="173" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="16"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Contact and More Info" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XdD-Jl-jNS">
                                 <rect key="frame" x="19" y="236" width="178" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="16"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Remember, alcohol is not permitted in the shuttle!" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CaM-U4-br8">
                                 <rect key="frame" x="17" y="309" width="396" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="12"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Application developed by Sawyer Bowman '15 Bowdoin College 2014" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="5Gm-a7-Jtf">
-                                <rect key="frame" x="8" y="341" width="400" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="10"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
                             <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Sunday-Wednesday: 6:00 P.M. - 2:00 A.M." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KxD-CI-DQi">
                                 <rect key="frame" x="19" y="118" width="294" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Thursday-Saturday: 6:00 P.M. - 3:00 A.M." minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Z1A-Kd-LhM">
                                 <rect key="frame" x="19" y="137" width="294" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Eddie Tharp, Angela Keating, Judy Sewall" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="207-i8-06M">
                                 <rect key="frame" x="19" y="189" width="294" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Anne Trottier, Jim Diemer" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DPN-IF-bkw">
                                 <rect key="frame" x="19" y="206" width="294" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yNy-Tu-Fni">
                                 <rect key="frame" x="19" y="259" width="105" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Call the Shuttle">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -412,7 +390,6 @@
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lBi-IE-bVo">
                                 <rect key="frame" x="19" y="283" width="119" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                 <state key="normal" title="Shuttle WebPage"/>
                                 <connections>
@@ -421,8 +398,13 @@
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="sun.png" translatesAutoresizingMaskIntoConstraints="NO" id="WIZ-B5-qip">
                                 <rect key="frame" x="123" y="14" width="69" height="69"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="Application developed by Sawyer Bowman '15 and Henry Pratt '15 Bowdoin College 2014" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="pVQ-5P-9sT">
+                                <rect key="frame" x="40" y="328" width="240" height="128"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
                         </subviews>
                         <color key="backgroundColor" red="0.93528778698979598" green="0.93528778698979598" blue="0.93528778698979598" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
@@ -432,14 +414,13 @@
             </objects>
             <point key="canvasLocation" x="1543" y="2772"/>
         </scene>
-        <!--Navigation Controller - Info-->
+        <!--Info-->
         <scene sceneID="qNR-dj-7QJ">
             <objects>
                 <navigationController definesPresentationContext="YES" id="9yL-HV-aNm" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Info" id="tjF-dA-3es"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="ZEF-ow-c0P">
-                        <rect key="frame" x="0.0" y="0.0" width="0.0" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -450,14 +431,13 @@
             </objects>
             <point key="canvasLocation" x="1064" y="1516"/>
         </scene>
-        <!--Navigation Controller - Call List-->
+        <!--Call List-->
         <scene sceneID="aYK-Fq-Aet">
             <objects>
                 <navigationController definesPresentationContext="YES" id="dfv-rX-m0E" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Call List" id="vy8-Nr-qFn"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="FuT-fe-Gpb">
-                        <rect key="frame" x="0.0" y="0.0" width="0.0" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -468,14 +448,13 @@
             </objects>
             <point key="canvasLocation" x="1064" y="929"/>
         </scene>
-        <!--Navigation Controller - Place Call-->
+        <!--Place Call-->
         <scene sceneID="Ipn-Ja-yPm">
             <objects>
                 <navigationController definesPresentationContext="YES" id="1QU-Bc-kI2" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Place Call" id="bUk-ut-px5"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="D8w-Pl-SJJ">
-                        <rect key="frame" x="0.0" y="0.0" width="0.0" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <connections>
@@ -486,7 +465,7 @@
             </objects>
             <point key="canvasLocation" x="1064" y="343"/>
         </scene>
-        <!--Bowdoin Shuttle View Controller - SafeRide Shuttles-->
+        <!--SafeRide Shuttles-->
         <scene sceneID="2rJ-uh-yxy">
             <objects>
                 <viewController id="sDO-jw-kIl" customClass="BowdoinShuttleViewController" sceneMemberID="viewController">
