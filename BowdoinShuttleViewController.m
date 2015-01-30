@@ -30,106 +30,135 @@
     // Creates a marker in the map.
     self.marker = [[GMSMarker alloc] init];
     self.location = [[CLLocation alloc] init];
-    self.start = [[NSDate alloc] init];
+    [self getLocation];
+    self.location2 = [[CLLocation alloc] init];
+    //bool foundLocation = [self getLocation2];
+    [self getLocation2];
+    //self.start = [[NSDate alloc] init];
     self.follow = false;
-    self.testing = false;
-    self.firstTimeThrough = true;
+    //self.testing = false;
+    //self.firstTimeThrough = true;
     
-    [self updateMapWithMotion];
-    if (self.firstTimeThrough) {
-        self.start = [NSDate date];
-    }
+    //[self updateMapWithMotionQuadratic];
+    //if (self.firstTimeThrough) {
+        //self.start = [NSDate date];
+    //}
     //[self updateMap];
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:.05 target:self selector:@selector(updateMapWithMotion) userInfo:nil repeats:YES];
+    //if (foundLocation){
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:.04 target:self selector:@selector(updateMapWithMotionQuadratic) userInfo:nil repeats:YES];
+    //}
     // display warning if not running
     [BowdoinShuttleViewController isRunning];
 }
 
 /*
- *This method is responsible for moving the pin. On the first run through, it waits 10 seconds
- *(the delay between stops from Track My Track). Then, it will move the Bowdoin pin from point
- *to point.
+ *An updated method to simulate smooth movement of the shuttle's pin. It uses
+ *a quadratic formula to do so.
  */
+ 
 
-
--(void)updateMapWithMotion {
+-(void)updateMapWithMotionQuadratic {
+    //double finalLat = self.location2.coordinate.latitude;
+    //double finalLon = self.location2.coordinate.longitude;
+    //NSLog(@"%f %f", self.location2.coordinate.latitude, self.location2.coordinate.longitude);
+    if (self.location2.coordinate.latitude == 0 && self.location2.coordinate.longitude == 0){
+        [self getLocation2];
+        //NSLog(@"Tried to get second location!");
+        return;
+    }
+    
+    double changeInLat = self.location2.coordinate.latitude - self.location.coordinate.latitude;
+    double changeInLon = self.location2.coordinate.longitude - self.location.coordinate.longitude;
+    
+    double curLat = 0;
+    double curLon = 0;
+    
+    if (self.t <= 5){
+        curLat = self.location.coordinate.latitude + changeInLat / 50 * self.t * self.t;
+        curLon = self.location.coordinate.longitude + changeInLon / 50 * self.t * self.t;
+        //self.marker.position = CLLocationCoordinate2DMake(curLat, curLon);
+        self.t += .04;
+    }
+    else{
+        curLat = self.location.coordinate.latitude + changeInLat / 2 + changeInLat * (self.t-5) / 5 - changeInLat * (self.t-5) * (self.t-5) / 50;
+        curLon =  self.location.coordinate.longitude + changeInLon / 2 + changeInLon * (self.t-5) / 5 - changeInLon * (self.t-5) * (self.t-5) / 50;
+        //self.marker.position = CLLocationCoordinate2DMake(curLat, curLon);
+        self.t += .04;
+    }
+    if (self.t >= 10){
+        self.marker.position = self.location2.coordinate;
+        //NSLog(@"%f, %f\n", self.location.coordinate.latitude, self.location.coordinate.longitude);
+        self.location = [self.location initWithLatitude:self.location2.coordinate.latitude longitude:self.location2.coordinate.longitude];
+        //NSLog(@"%f, %f\n", self.location.coordinate.latitude, self.location.coordinate.longitude);
+        //self.location = self.location2;
+        //NSLog(@"%f, %f\n", self.location2.coordinate.latitude, self.location2.coordinate.longitude);
+        [self getLocation2];
+        //NSLog(@"%f, %f\n", self.location2.coordinate.latitude, self.location2.coordinate.longitude);
+        self.t = 0;
+    }
+    
+    //NSLog(@"%f, %f\n", curLat, curLon);
+    
+    [self setUpMarkerWithLat:curLat andLon:curLon];
     
     [self updateCenter];
-    self.timeInterval = (-1)*[self.start timeIntervalSinceNow];
-    
-    if (self.firstTimeThrough || self.timeInterval >= 10) {
-        [[NSURLCache sharedURLCache] removeAllCachedResponses];
-        //NSString *urlString = @"http://necstats.org/shuttle/van_l.php";
-        NSString *urlString = @"http://shuttle.bowdoinimg.net/van_l.php?van=0";
-        NSURL *urlAddress = [[NSURL alloc] initWithString:urlString];
-        NSString *coordinates = [self stringWithUrl:urlAddress];
-        NSArray *coordinatesDivided = [coordinates componentsSeparatedByString:@","];
-    
-        NSNumber *vanLatitude = (NSNumber*) coordinatesDivided[0];
-        NSNumber *vanLongitude = (NSNumber*) coordinatesDivided[1];
-        
-        double curLat = [vanLatitude doubleValue];
-        double curLon = [vanLongitude doubleValue];
-        
-        self.timeInterval = (-1)*[self.start timeIntervalSinceNow];
-        
-        if (self.timeInterval >= 10) {
-            self.location2 = [[CLLocation alloc] init];
-            self.location2 = [self.location2 initWithLatitude:curLat longitude:curLon];
-            
-            //These lines are used to demonstrate the shuttle moving (when shuttle isn't running)
-//            if (self.testing) {
-//                self.location2 = [self.location2 initWithLatitude:43.9154663085938 longitude:-69.964973449707];
-//            }
-//            else {
-//                self.location2 = [self.location2 initWithLatitude:43.9126892089844 longitude:-69.9608001708984];
-//                self.testing = true;
-//            }
-            
-            self.start = [[NSDate alloc] init];
-        }
-        else if (self.firstTimeThrough) {
-            self.location = [self.location initWithLatitude:self.location.coordinate.latitude longitude:self.location.coordinate.longitude];
-            self.location = [self.location initWithLatitude:curLat longitude:curLon];
-            //self.location = [self.location initWithLatitude:43.9111557006836 longitude:-69.9614891967773];
-            self.marker.position = CLLocationCoordinate2DMake(curLat, curLon);
-            //self.marker.position = CLLocationCoordinate2DMake(43.9111557006836, -69.9614891967773);
-            self.marker.title = @"Shuttle 1";
-            self.marker.snippet = @"Bowdoin College";
-            self.marker.icon = [UIImage imageNamed:@"b_pin.png"];
-            self.marker.map = mapView_;
-            self.firstTimeThrough = false;
-            self.start = [NSDate date];
-        }
-        
+}
+
+/*
+ *Get's the first location and sets up the marker.
+ */
+
+-(void)getLocation {
+    self.location = [self parseAndAssignCoordinateTo:self.location];
+    NSLog(@"%f, %f", self.location.coordinate.latitude, self.location.coordinate.longitude);
+    [self setUpMarkerWithLat:self.location.coordinate.latitude andLon:self.location.coordinate.longitude];
+    //[self updateCenter];
+}
+
+/*
+ *Gets the second location, continuously making calls until it finds a location
+ *that is different from the first location.
+ */
+
+-(void)getLocation2{
+    if ((self.location.coordinate.latitude  == self.location2.coordinate.latitude && self.location.coordinate.longitude == self.location2.coordinate.longitude) || (self.location2.coordinate.latitude == 0 && self.location2.coordinate.longitude == 0) ){
+        self.location2 = [self parseAndAssignCoordinateTo:self.location2];
     }
-    self.timeInterval = (-1)*[self.start timeIntervalSinceNow];
-    if (self.timeInterval < 10 && self.location2 != nil) {
-        double latitude = self.location.coordinate.latitude;
-        double latitude2 = self.location2.coordinate.latitude;
-        double longitude = self.location.coordinate.longitude;
-        double longitude2 = self.location2.coordinate.longitude;
-        self.rise = latitude2 - latitude;
-        self.run = longitude2 - longitude;
-        
-        self.timeInterval = (-1)*[self.start timeIntervalSinceNow];
-        double multiplier = self.timeInterval*.04;
-        double fraction = (10/multiplier);
-        double latFraction = self.rise/fraction;
-        double lonFraction = self.run/fraction;
-        latitude += latFraction;
-        longitude += lonFraction;
-        
-        self.location = [self.location initWithLatitude:latitude longitude:longitude];
-        
-        self.marker.position = CLLocationCoordinate2DMake(latitude, longitude);
-        self.marker.title = @"Shuttle 1";
-        self.marker.snippet = @"Bowdoin College";
-        self.marker.icon = [UIImage imageNamed:@"b_pin.png"];
-        self.marker.map = mapView_;
-        
-        [self updateCenter];
-    }
+    //return true;
+}
+
+/*
+ *Sets up the marker and puts it on the map.
+ */
+
+-(void) setUpMarkerWithLat:(double)lat andLon:(double)lon {
+    self.marker.title = @"Shuttle 1";
+    self.marker.snippet = @"Bowdoin College";
+    self.marker.icon = [UIImage imageNamed:@"b_pin.png"];
+    self.marker.position = CLLocationCoordinate2DMake(lat, lon);
+    self.marker.map = mapView_;
+}
+
+/*
+ *Parses the webpage responsible for getting the shuttle coordinates and returns it.
+ */
+
+-(CLLocation *)parseAndAssignCoordinateTo:(CLLocation *) location {
+    [[NSURLCache sharedURLCache] removeAllCachedResponses];
+    //NSString *urlString = @"http://shuttle.bowdoinimg.net/van_l.php?van=0";
+    //Use this string for testing
+    NSString *urlString = @"http://shuttle.bowdoinimg.net/van_l_r.php?van=0";
+    NSURL *urlAddress = [[NSURL alloc] initWithString:urlString];
+    NSString *coordinates = [self stringWithUrl:urlAddress];
+    NSArray *coordinatesDivided = [coordinates componentsSeparatedByString:@","];
+    
+    NSNumber *vanLatitude = (NSNumber*) coordinatesDivided[0];
+    NSNumber *vanLongitude = (NSNumber*) coordinatesDivided[1];
+    
+    double curLat = [vanLatitude doubleValue];
+    double curLon = [vanLongitude doubleValue];
+    location = [location initWithLatitude:curLat longitude:curLon];
+    return location;
 }
 
 /*

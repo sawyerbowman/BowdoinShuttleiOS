@@ -24,17 +24,18 @@
 @property (nonatomic, strong) GMSMarker *marker;
 @property (nonatomic, strong) CLLocation *location;
 @property (nonatomic, strong) CLLocation *location2;
+@property double t;
 
-@property NSDate *start;
-@property NSTimeInterval timeInterval;
+//@property NSDate *start;
+//@property NSTimeInterval timeInterval;
 
 @property bool curSet;
-@property bool testing;
-@property bool firstTimeThrough;
+//@property bool testing;
+//@property bool firstTimeThrough;
 @property bool follow;
 
-@property double rise;
-@property double run;
+//@property double rise;
+//@property double run;
 
 @property NSString *selectedShuttle;
 
