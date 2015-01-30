@@ -145,9 +145,9 @@
 
 -(CLLocation *)parseAndAssignCoordinateTo:(CLLocation *) location {
     [[NSURLCache sharedURLCache] removeAllCachedResponses];
-    //NSString *urlString = @"http://shuttle.bowdoinimg.net/van_l.php?van=0";
+    NSString *urlString = @"http://shuttle.bowdoinimg.net/van_l.php?van=0";
     //Use this string for testing
-    NSString *urlString = @"http://shuttle.bowdoinimg.net/van_l_r.php?van=0";
+    //NSString *urlString = @"http://shuttle.bowdoinimg.net/van_l_r.php?van=0";
     NSURL *urlAddress = [[NSURL alloc] initWithString:urlString];
     NSString *coordinates = [self stringWithUrl:urlAddress];
     NSArray *coordinatesDivided = [coordinates componentsSeparatedByString:@","];
