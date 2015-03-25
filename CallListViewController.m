@@ -52,7 +52,7 @@
 }
 
 /*
- *This method cancels the user's call. (Not function yet)
+ *This method cancels the user's call.
  */
 
 - (IBAction)cancelVanCall:(id)sender {
@@ -63,6 +63,7 @@
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"Call canceled" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
         [self getAllCalls];
+        [self showCancelButton];
         [self.tableView reloadData];
     }
     else {
@@ -110,7 +111,13 @@
     NSString *passUrl = [NSString stringWithFormat:@"http://shuttle.bowdoinimg.net/netdirect/call_check_d.php"];
     NSString *data = [self getDataFrom:passUrl];
     if ([data isEqualToString:@"code=0"]){
-        [self.navigationItem setRightBarButtonItem:nil animated:NO];
+        self.cancelButton.enabled = false;
+        self.trackButton.enabled = false;
+        //[self.navigationItem setRightBarButtonItem:nil animated:NO];
+    }
+    else {
+        self.cancelButton.enabled = true;
+        self.trackButton.enabled = true;
     }
 }
 
