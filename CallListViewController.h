@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #include "Request.h"
+#import "BowdoinShuttleViewController.h"
 
 @class CallListViewController;
 
@@ -16,7 +17,7 @@
 
 @end
 
-@interface CallListViewController : UITableViewController
+@interface CallListViewController : UITableViewController <BowdoinShuttleViewControllerDelegate>
 
 -(void)getAllCalls;
 
@@ -24,5 +25,10 @@
 @property (nonatomic, strong) NSMutableArray *calls;
 
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *cancelButton;
+
+//TODO: show this when call has been made
+@property (weak, nonatomic) IBOutlet UIBarButtonItem *trackButton;
+
+- (IBAction)trackShuttle:(id)sender;
 
 @end

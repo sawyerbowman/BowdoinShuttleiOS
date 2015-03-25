@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="kG4-J0-zZY">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="kG4-J0-zZY">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
@@ -16,7 +16,6 @@
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </tabBar>
                     <connections>
-                        <segue destination="aw8-8j-AIX" kind="relationship" relationship="viewControllers" id="blr-85-q8g"/>
                         <segue destination="1QU-Bc-kI2" kind="relationship" relationship="viewControllers" id="xPM-mr-JhU"/>
                         <segue destination="dfv-rX-m0E" kind="relationship" relationship="viewControllers" id="uB4-uh-Qsl"/>
                         <segue destination="9yL-HV-aNm" kind="relationship" relationship="viewControllers" id="nmf-JC-ZRi"/>
@@ -25,23 +24,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="opM-cJ-QQP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="534" y="45"/>
-        </scene>
-        <!--Map-->
-        <scene sceneID="UFh-XV-UCt">
-            <objects>
-                <navigationController definesPresentationContext="YES" id="aw8-8j-AIX" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Map" id="iYZ-ru-Eaa"/>
-                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" barStyle="black" translucent="NO" prompted="NO"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" translucent="NO" id="mh8-Ij-Z9S">
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="sDO-jw-kIl" kind="relationship" relationship="rootViewController" id="CeD-er-dqW"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="QMa-xI-ob6" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1064" y="-238"/>
         </scene>
         <!--Make Request-->
         <scene sceneID="IVy-MC-5KX">
@@ -270,6 +252,13 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Call List" id="EY1-nD-bJw" customClass="CallList">
+                        <barButtonItem key="leftBarButtonItem" title="Track Shuttle" id="s48-r0-GpM">
+                            <color key="tintColor" red="0.1015515063" green="0.89883609689999999" blue="0.44064526069999999" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="trackShuttle:" destination="TCm-bl-Jbs" id="JGm-2L-D2v"/>
+                                <segue destination="sDO-jw-kIl" kind="push" identifier="TrackShuttle" id="VdQ-nU-SJl"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="Cancel Call" id="Ywe-Hc-2Iv">
                             <color key="tintColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
@@ -279,6 +268,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="cancelButton" destination="Ywe-Hc-2Iv" id="bOz-gs-M4D"/>
+                        <outlet property="trackButton" destination="s48-r0-GpM" id="HGn-NC-51a"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pIk-Ov-Msn" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -304,9 +294,9 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="cJ2-F6-hFG">
-                                <rect key="frame" x="40" y="80" width="240" height="128"/>
+                                <rect key="frame" x="40" y="80" width="240" height="133"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <string key="text">Your request has been processed and assigned to a shuttle. Please visit the route page to see more information about where each shuttle is going and how long the wait is.</string>
+                                <string key="text">Your request is being processed and will be assigned to a shuttle. Please visit the route page to see more information about where each shuttle is going and how long the wait is, or visit the map page to see the location of the shuttle</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
@@ -474,7 +464,7 @@
                         <viewControllerLayoutGuide type="bottom" id="c5F-ki-VKT"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="ucc-0n-EYK">
-                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="367"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -492,7 +482,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zuZ-nC-hJS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1583" y="-1198"/>
+            <point key="canvasLocation" x="2731" y="1777"/>
         </scene>
         <!--Table View Controller-->
         <scene sceneID="kxJ-FH-wI2">

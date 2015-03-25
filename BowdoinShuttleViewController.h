@@ -11,6 +11,13 @@
 #import "ShuttlePopover.h"
 #import "PopoverView.h"
 
+@class BowdoinShuttleViewController;
+
+@protocol BowdoinShuttleViewControllerDelegate <NSObject>
+- (void)bowdoinShuttleViewController:(BowdoinShuttleViewController *)controller;
+
+@end
+
 @interface BowdoinShuttleViewController : UIViewController <PopoverViewDelegate, UITableViewDataSource, UITableViewDelegate> {
     
     PopoverView *pv;
@@ -40,6 +47,8 @@
 @property NSString *selectedShuttle;
 
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *followButton;
+
+@property (nonatomic, weak) id <BowdoinShuttleViewControllerDelegate> delegate;
 
 
 - (IBAction)followShuttle:(id)sender;

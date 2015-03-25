@@ -114,6 +114,8 @@
     }
 }
 
+//TODO Show Track Button when call has been made
+
 /*
  *This method is responsible for obtaining each request and reformatting them.
  */
@@ -236,4 +238,29 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 	//NSString *theDestination = [destinations objectAtIndex:indexPath.row];
 }
 
+//delegate method
+
+- (void)bowdoinShuttleViewController:(BowdoinShuttleViewController *)controller{
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+/*
+ *This method selects the next page to display depending on the button clicked.
+ */
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"TrackShuttle"])
+    {
+        BowdoinShuttleViewController *bowdoinShuttleViewController = segue.destinationViewController;
+        bowdoinShuttleViewController.delegate = self;
+    }
+    
+}
+
+//calls the proper segue when the button is clicked
+
+- (IBAction)trackShuttle:(id)sender {
+    [self performSegueWithIdentifier:@"TrackShuttle" sender:sender];
+}
 @end
