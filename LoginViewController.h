@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#include <CommonCrypto/CommonDigest.h>
+#import "GetRequest.h"
 
 @class LoginViewController;
 
@@ -14,8 +16,10 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *userName;
 
-@property (weak, nonatomic) IBOutlet UITextField *password;
-
 - (IBAction)verifyLogin:(id)sender;
+- (NSString*) sha1:(NSString*)input;
+
+- (IBAction)textFieldReturn:(id)sender;
+- (void) hideKeyboard;
 
 @end

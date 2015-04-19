@@ -57,7 +57,7 @@
 
 - (IBAction)cancelVanCall:(id)sender {
     NSString *passUrl = @"http://shuttle.bowdoinimg.net/netdirect/cancel_d.php";
-    NSString *response = [self getDataFrom:passUrl];
+    NSString* response = [GetRequest getDataFrom:passUrl];
     
     if ([[response substringWithRange:NSMakeRange(5, 1)] isEqualToString:@"1"]){
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"Call canceled" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
@@ -81,35 +81,13 @@
 }
 
 /*
- *This method gets the response code and returns it to determine how to proceed.
- */
-
-- (NSString *) getDataFrom:(NSString *)url{
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setHTTPMethod:@"GET"];
-    [request setURL:[NSURL URLWithString:url]];
-    
-    NSError *error = [[NSError alloc] init];
-    NSHTTPURLResponse *responseCode = nil;
-    
-    NSData *oResponseData = [NSURLConnection sendSynchronousRequest:request returningResponse:&responseCode error:&error];
-    
-    if([responseCode statusCode] != 200){
-        NSLog(@"Error getting %@, HTTP status code %li", url, (long)[responseCode statusCode]);
-        return nil;
-    }
-    
-    return [[NSString alloc] initWithData:oResponseData encoding:NSUTF8StringEncoding];
-}
-
-/*
  *This method checks to see if the user has a call that can be cancelled. If not,
  *the cancel call button will not be displayed.
  */
 
 -(void)showCancelButton{
     NSString *passUrl = [NSString stringWithFormat:@"http://shuttle.bowdoinimg.net/netdirect/call_check_d.php"];
-    NSString *data = [self getDataFrom:passUrl];
+    NSString *data = [GetRequest getDataFrom:passUrl];
     if ([data isEqualToString:@"code=0"]){
         self.cancelButton.enabled = false;
         self.trackButton.enabled = false;
@@ -130,7 +108,7 @@
 - (void)getAllCalls{
     self.calls = [[NSMutableArray alloc] init];
     NSString *passUrl = [NSString stringWithFormat:@"http://shuttle.bowdoinimg.net/netdirect/track_d.php"];
-    NSString *data = [self getDataFrom:passUrl];
+    NSString *data = [GetRequest getDataFrom:passUrl];
     if ([data isEqualToString:@""]){
         [self.tableView reloadData];
         return;

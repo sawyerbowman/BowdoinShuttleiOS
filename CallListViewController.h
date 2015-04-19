@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #include "Request.h"
 #import "BowdoinShuttleViewController.h"
+#import "GetRequest.h"
 
 @class CallListViewController;
 
