@@ -12,9 +12,10 @@
 
 @class LoginViewController;
 
-@interface LoginViewController : UIViewController
+@interface LoginViewController : UIViewController <UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *userName;
+@property (strong, nonatomic) NSString* hashVal;
 
 - (IBAction)verifyLogin:(id)sender;
 - (NSString*) sha1:(NSString*)input;
