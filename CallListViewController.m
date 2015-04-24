@@ -217,8 +217,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 		cell.accessoryType = UITableViewCellAccessoryNone;
 	}
 	selectedIndex = indexPath.row;
-	UITableViewCell *cell =
-    [tableView cellForRowAtIndexPath:indexPath];
+	UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
 	//cell.accessoryType = UITableViewCellAccessoryCheckmark;
 	//NSString *theDestination = [destinations objectAtIndex:indexPath.row];
 }

@@ -16,7 +16,34 @@
     [self.view addGestureRecognizer:gestureRecognizer];
 }
 
-- (IBAction)verifyLogin:(id)sender {
+- (void) hideKeyboard {
+    [self.view endEditing:YES];
+}
+
+-(IBAction)textFieldReturn:(id)sender
+{
+    [sender resignFirstResponder];
+}
+
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    //If buttonIndex is yes, get the email from the user
+    if (buttonIndex == 1) {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"Add your email" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
+        [alert textFieldAtIndex:0].placeholder = @"ex. bmills@bowdoin.edu";
+        [alert textFieldAtIndex:0].keyboardType = UIKeyboardTypeEmailAddress;
+        [alert show];
+    }
+    else {
+        UITextField *textfield =  [alertView textFieldAtIndex: 0];
+        
+        NSString* url = [NSString stringWithFormat:@"http://shuttle.bowdoinimg.net/netdirect/addemail_d.php?ID=%@&email=%@", self.hashVal, textfield.text];
+        NSString* response = [GetRequest getDataFrom:url];
+    }
+}
+
+- (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
     //if directory contains username
     //if pairing of username and password is correct
     //NSString* test = [self sha1:self.userName];
@@ -46,7 +73,7 @@
             }
         }
         if (success){
-            [self performSegueWithIdentifier:@"Login" sender:sender];
+            return YES;
         }
         else{
             UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"Please Enter A Valid Bowdoin ID Number." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
@@ -58,34 +85,22 @@
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"Please Enter Your Bowdoin ID Number." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
         [alert show];
     }
+    return NO;
 }
 
-- (void) hideKeyboard {
-    [self.view endEditing:YES];
-}
+/**
+ *Prepares for segue to request
+ */
 
--(IBAction)textFieldReturn:(id)sender
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-    [sender resignFirstResponder];
+    UITabBarController *tabbar=segue.destinationViewController;
+    UINavigationController *navController = [tabbar.viewControllers objectAtIndex:0];
+    RequestViewController *svc=[navController.viewControllers objectAtIndex:0];
+    svc.hashVal = self.hashVal;
+
 }
 
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
-    //If buttonIndex is yes, get the email from the user
-    if (buttonIndex == 1) {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"Add your email" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
-        [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
-        [alert textFieldAtIndex:0].placeholder = @"ex. bmills@bowdoin.edu";
-        [alert textFieldAtIndex:0].keyboardType = UIKeyboardTypeEmailAddress;
-        [alert show];
-    }
-    else {
-        UITextField *textfield =  [alertView textFieldAtIndex: 0];
-        
-        NSString* url = [NSString stringWithFormat:@"http://shuttle.bowdoinimg.net/netdirect/addemail_d.php?ID=%@&email=%@", self.hashVal, textfield.text];
-        NSString* response = [GetRequest getDataFrom:url];
-    }
-}
 
 /**
  *Creates a hash

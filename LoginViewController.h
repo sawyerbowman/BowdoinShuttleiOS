@@ -9,13 +9,21 @@
 #import <Foundation/Foundation.h>
 #include <CommonCrypto/CommonDigest.h>
 #import "GetRequest.h"
+#import "RequestViewController.h"
 
 @class LoginViewController;
 
-@interface LoginViewController : UIViewController <UIAlertViewDelegate>
+@protocol LoginViewControllerDelegate <NSObject>
+- (void)loginViewController:(LoginViewController *)controller;
+
+@end
+
+@interface LoginViewController : UIViewController <UIAlertViewDelegate, RequestViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITextField *userName;
 @property (strong, nonatomic) NSString* hashVal;
+
+@property (nonatomic, weak) id <LoginViewControllerDelegate> delegate;
 
 - (IBAction)verifyLogin:(id)sender;
 - (NSString*) sha1:(NSString*)input;
