@@ -56,7 +56,7 @@
  */
 
 - (IBAction)cancelVanCall:(id)sender {
-    NSString *passUrl = @"http://shuttle.bowdoinimg.net/netdirect/cancel_d.php";
+    NSString *passUrl = [NSString stringWithFormat:@"http://shuttle.bowdoinimg.net/netdirect/cancel_d.php?bh=%@", self.hashVal];
     NSString* response = [GetRequest getDataFrom:passUrl];
     
     if ([[response substringWithRange:NSMakeRange(5, 1)] isEqualToString:@"1"]){
@@ -86,7 +86,7 @@
  */
 
 -(void)showCancelButton{
-    NSString *passUrl = [NSString stringWithFormat:@"http://shuttle.bowdoinimg.net/netdirect/call_check_d.php"];
+    NSString *passUrl = [NSString stringWithFormat:@"http://shuttle.bowdoinimg.net/netdirect/call_check_d.php?bh=%@", self.hashVal];
     NSString *data = [GetRequest getDataFrom:passUrl];
     if ([data isEqualToString:@"code=0"]){
         self.cancelButton.enabled = false;
@@ -107,7 +107,7 @@
 
 - (void)getAllCalls{
     self.calls = [[NSMutableArray alloc] init];
-    NSString *passUrl = [NSString stringWithFormat:@"http://shuttle.bowdoinimg.net/netdirect/track_d.php"];
+    NSString *passUrl = [NSString stringWithFormat:@"http://shuttle.bowdoinimg.net/netdirect/track_d.php?bh=%@", self.hashVal];
     NSString *data = [GetRequest getDataFrom:passUrl];
     if ([data isEqualToString:@""]){
         [self.tableView reloadData];

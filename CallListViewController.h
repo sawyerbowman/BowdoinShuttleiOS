@@ -30,6 +30,8 @@
 //TODO: show this when call has been made
 @property (weak, nonatomic) IBOutlet UIBarButtonItem *trackButton;
 
+@property (strong, retain) NSString* hashVal;
+
 - (IBAction)trackShuttle:(id)sender;
 
 @end

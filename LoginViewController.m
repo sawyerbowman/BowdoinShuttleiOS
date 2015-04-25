@@ -96,8 +96,12 @@
 {
     UITabBarController *tabbar=segue.destinationViewController;
     UINavigationController *navController = [tabbar.viewControllers objectAtIndex:0];
-    RequestViewController *svc=[navController.viewControllers objectAtIndex:0];
+    RequestViewController *svc = [navController.viewControllers objectAtIndex:0];
     svc.hashVal = self.hashVal;
+    
+    UINavigationController *navController2 = [tabbar.viewControllers objectAtIndex:1];
+    CallListViewController *svc2 = [navController2.viewControllers objectAtIndex:0];
+    svc2.hashVal = self.hashVal;
 
 }
 
