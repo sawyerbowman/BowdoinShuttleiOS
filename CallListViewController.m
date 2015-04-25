@@ -113,6 +113,9 @@
         [self.tableView reloadData];
         return;
     }
+    else if ([data containsString:@"There are"]){
+        self.waitingCalls.text = data;
+    }
     NSLog(@"%@", data);
     NSArray *rawData = [self generateArray:data];
     for (NSString *element in rawData){
@@ -195,7 +198,7 @@
 {
 	UITableViewCell *cell = [tableView
                              dequeueReusableCellWithIdentifier:@"CallListCell"];
-    NSString* finalText = [[((Request*)[self.calls objectAtIndex:indexPath.row]).origin stringByAppendingString:@" TO "] stringByAppendingString:((Request*)[self.calls objectAtIndex:indexPath.row]).destination];
+    NSString* finalText = [[((Request*)[self.calls objectAtIndex:indexPath.row]).origin stringByAppendingString:@" to "] stringByAppendingString:((Request*)[self.calls objectAtIndex:indexPath.row]).destination];
 	cell.textLabel.text = finalText;
 //	if (indexPath.row == selectedIndex)
 //		cell.accessoryType =

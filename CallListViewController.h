@@ -32,6 +32,8 @@
 
 @property (strong, retain) NSString* hashVal;
 
+@property (strong, nonatomic) IBOutlet UITextView *waitingCalls;
+
 - (IBAction)trackShuttle:(id)sender;
 
 @end
