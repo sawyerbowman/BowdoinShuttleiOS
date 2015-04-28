@@ -14,6 +14,7 @@
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     gestureRecognizer.cancelsTouchesInView = NO; //so that action such as clear text field button can be pressed
     [self.view addGestureRecognizer:gestureRecognizer];
+    self.userName.placeholder = @"ex. 9999";
 }
 
 - (void) hideKeyboard {
@@ -29,7 +30,7 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     //If buttonIndex is yes, get the email from the user
     if (buttonIndex == 1) {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"Add your email" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"Confirm your email" delegate:self cancelButtonTitle:@"Ok" otherButtonTitles:nil, nil];
         [alert setAlertViewStyle:UIAlertViewStylePlainTextInput];
         [alert textFieldAtIndex:0].placeholder = @"ex. bmills@bowdoin.edu";
         [alert textFieldAtIndex:0].keyboardType = UIKeyboardTypeEmailAddress;
@@ -40,6 +41,34 @@
         
         NSString* url = [NSString stringWithFormat:@"http://shuttle.bowdoinimg.net/netdirect/addemail_d.php?ID=%@&email=%@", self.hashVal, textfield.text];
         NSString* response = [GetRequest getDataFrom:url];
+        
+        NSArray* responseTraits = [response componentsSeparatedByString:@"&"];
+        for (NSString* trait in responseTraits){
+            if ([trait isEqualToString:@"success=1"]){
+                self.success = true;
+            }
+            else if ([[trait substringWithRange:NSMakeRange(0, 7)] isEqualToString:@"session"]){
+                self.email = true;
+                self.hashVal = [trait substringFromIndex:14];
+            }
+        }
+        
+        if (self.success && self.email){
+            //[self prepareForSegue:nil sender:nil];
+            [self performSegueWithIdentifier:@"Login" sender:nil];
+        }
+        else{
+            NSScanner *scanner = [NSScanner scannerWithString:response];
+            NSString *preMessage = [[NSString alloc] init];
+            NSString *postMessage = [[NSString alloc] init];
+            
+            [scanner scanUpToString:@"message=" intoString:&preMessage];
+            [scanner scanString:@"message=" intoString:nil];
+            postMessage = [response substringFromIndex:scanner.scanLocation];
+            
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:postMessage delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+            [alert show];
+        }
     }
 }
 
@@ -49,35 +78,43 @@
     //NSString* test = [self sha1:self.userName];
     
     //If userName is filled in, continue
-    if ([self.userName.text length] != 0 && [self.userName.text length] == 5){
+    if ([self.userName.text length] != 0 && [self.userName.text length] == 4){
         //Put first letter at back of letters
-        NSString* firstLetter = [self.userName.text substringToIndex:1];
-        NSString* lastLetters = [self.userName.text substringWithRange:NSMakeRange(1, 4)];
-        NSString* reverted = [lastLetters stringByAppendingString:firstLetter];
-        NSString* hashedID = [self sha1:reverted];
-        self.hashVal = [[NSString alloc] initWithString:hashedID];
+        //NSString* firstLetter = [self.userName.text substringToIndex:1];
+        //NSString* lastLetters = [self.userName.text substringWithRange:NSMakeRange(1, 4)];
+        //NSString* reverted = [lastLetters stringByAppendingString:firstLetter];
+        //NSString* hashedID = [self sha1:reverted];
+        //self.hashVal = [[NSString alloc] initWithString:hashedID];
+        
+        //Need to change this to hash (commented above) to prevent snooping
+        self.hashVal = self.userName.text;
         
         NSString* url = [NSString stringWithFormat:@"http://shuttle.bowdoinimg.net/netdirect/check_login_d.php?ID=%@", self.hashVal];
         NSString* response = [GetRequest getDataFrom:url];
         
-        Boolean success = false;
+        self.success = false;
+        self.email = false;
         
         NSArray* responseTraits = [response componentsSeparatedByString:@"&"];
         for (NSString* trait in responseTraits){
+            //NSLog([trait substringWithRange:NSMakeRange(0, 6)]);
             if ([trait isEqualToString:@"success=1"]){
-                success = true;
+                self.success = true;
+            }
+            else if ([trait isEqualToString:@"email=1"]){
+                self.email = true;
+            }
+            //get session token
+            else if ([[trait substringWithRange:NSMakeRange(0, 7)] isEqualToString:@"session"]){
+                self.hashVal = [trait substringFromIndex:14];
             }
             else if ([trait isEqualToString:@"email=0"]){
-                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"You will not be able to receive email updates. Do you want to add your email?" delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
+                UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"You haven't logged in for a while. Please add your Bowdoin email to confirm." delegate:self cancelButtonTitle:@"No" otherButtonTitles:@"Yes", nil];
                 [alert show];
             }
         }
-        if (success){
+        if (self.success && self.email){
             return YES;
-        }
-        else{
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"Please Enter A Valid Bowdoin ID Number." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-            [alert show];
         }
     }
     //Else, output error message to user

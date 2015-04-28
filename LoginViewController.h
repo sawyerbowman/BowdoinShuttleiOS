@@ -23,6 +23,8 @@
 
 @property (weak, nonatomic) IBOutlet UITextField *userName;
 @property (strong, nonatomic) NSString* hashVal;
+@property Boolean email;
+@property Boolean success;
 
 @property (nonatomic, weak) id <LoginViewControllerDelegate> delegate;
 
