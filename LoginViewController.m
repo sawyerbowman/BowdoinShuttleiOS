@@ -10,6 +10,10 @@
 
 @implementation LoginViewController
 
+/**
+ *Initialize view to allow gestures and taps, give example
+ */
+
 - (void)viewDidLoad {
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(hideKeyboard)];
     gestureRecognizer.cancelsTouchesInView = NO; //so that action such as clear text field button can be pressed
@@ -17,15 +21,26 @@
     self.userName.placeholder = @"ex. 9999";
 }
 
+/**
+ *
+ */
+
 - (void) hideKeyboard {
     [self.view endEditing:YES];
 }
+
+/**
+ *
+ */
 
 -(IBAction)textFieldReturn:(id)sender
 {
     [sender resignFirstResponder];
 }
 
+/**
+ *The delegate method for UIAlertView. Allows the user to add an email.
+ */
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     //If buttonIndex is yes, get the email from the user
@@ -71,6 +86,10 @@
         }
     }
 }
+
+/**
+ *Determines whether the segue to the requestviewcontroller should fire
+ */
 
 - (BOOL)shouldPerformSegueWithIdentifier:(NSString *)identifier sender:(id)sender {
     //if directory contains username
@@ -164,6 +183,17 @@
     
     return output;
     
+}
+
+/**
+ *Ensures only vertical orientation for this view
+ */
+
+- (NSUInteger) supportedInterfaceOrientations {
+    // Return a bitmask of supported orientations. If you need more,
+    // use bitwise or (see the commented return).
+    return UIInterfaceOrientationMaskPortrait;
+    // return UIInterfaceOrientationMaskPortrait | UIInterfaceOrientationMaskPortraitUpsideDown;
 }
 
 @end

@@ -16,6 +16,11 @@
     GMSMapView *mapView_;
 }
 
+/**
+ *Does a lot of initialization. Sets up Google Maps. Updates map with pin moving
+ *for time intervals.
+ */
+
 - (void)viewDidLoad {
     // Create a GMSCameraPosition that tells the map to display the
     // coordinate, and tells us the center
@@ -32,30 +37,19 @@
     self.location = [[CLLocation alloc] init];
     [self getLocation];
     self.location2 = [[CLLocation alloc] init];
-    //bool foundLocation = [self getLocation2];
     [self getLocation2];
-    //self.start = [[NSDate alloc] init];
     self.follow = false;
-    //self.testing = false;
-    //self.firstTimeThrough = true;
-    
-    //[self updateMapWithMotionQuadratic];
-    //if (self.firstTimeThrough) {
-        //self.start = [NSDate date];
-    //}
-    //[self updateMap];
-    //if (foundLocation){
+
     self.timer = [NSTimer scheduledTimerWithTimeInterval:.04 target:self selector:@selector(updateMapWithMotionQuadratic) userInfo:nil repeats:YES];
-    //}
+    
     // display warning if not running
     [BowdoinShuttleViewController isRunning];
 }
 
-/*
+/**
  *An updated method to simulate smooth movement of the shuttle's pin. It uses
  *a quadratic formula to do so.
  */
- 
 
 -(void)updateMapWithMotionQuadratic {
     //double finalLat = self.location2.coordinate.latitude;
@@ -63,7 +57,6 @@
     //NSLog(@"%f %f", self.location2.coordinate.latitude, self.location2.coordinate.longitude);
     if (self.location2.coordinate.latitude == 0 && self.location2.coordinate.longitude == 0){
         [self getLocation2];
-        //NSLog(@"Tried to get second location!");
         return;
     }
     
@@ -76,35 +69,26 @@
     if (self.t <= 5){
         curLat = self.location.coordinate.latitude + changeInLat / 50 * self.t * self.t;
         curLon = self.location.coordinate.longitude + changeInLon / 50 * self.t * self.t;
-        //self.marker.position = CLLocationCoordinate2DMake(curLat, curLon);
         self.t += .04;
     }
     else{
         curLat = self.location.coordinate.latitude + changeInLat / 2 + changeInLat * (self.t-5) / 5 - changeInLat * (self.t-5) * (self.t-5) / 50;
         curLon =  self.location.coordinate.longitude + changeInLon / 2 + changeInLon * (self.t-5) / 5 - changeInLon * (self.t-5) * (self.t-5) / 50;
-        //self.marker.position = CLLocationCoordinate2DMake(curLat, curLon);
         self.t += .04;
     }
     if (self.t >= 10){
         self.marker.position = self.location2.coordinate;
-        //NSLog(@"%f, %f\n", self.location.coordinate.latitude, self.location.coordinate.longitude);
         self.location = [self.location initWithLatitude:self.location2.coordinate.latitude longitude:self.location2.coordinate.longitude];
-        //NSLog(@"%f, %f\n", self.location.coordinate.latitude, self.location.coordinate.longitude);
-        //self.location = self.location2;
-        //NSLog(@"%f, %f\n", self.location2.coordinate.latitude, self.location2.coordinate.longitude);
         [self getLocation2];
-        //NSLog(@"%f, %f\n", self.location2.coordinate.latitude, self.location2.coordinate.longitude);
         self.t = 0;
     }
-    
-    //NSLog(@"%f, %f\n", curLat, curLon);
     
     [self setUpMarkerWithLat:curLat andLon:curLon];
     
     [self updateCenter];
 }
 
-/*
+/**
  *Get's the first location and sets up the marker.
  */
 
@@ -112,10 +96,9 @@
     self.location = [self parseAndAssignCoordinateTo:self.location];
     NSLog(@"%f, %f", self.location.coordinate.latitude, self.location.coordinate.longitude);
     [self setUpMarkerWithLat:self.location.coordinate.latitude andLon:self.location.coordinate.longitude];
-    //[self updateCenter];
 }
 
-/*
+/**
  *Gets the second location, continuously making calls until it finds a location
  *that is different from the first location.
  */
@@ -124,10 +107,9 @@
     if ((self.location.coordinate.latitude  == self.location2.coordinate.latitude && self.location.coordinate.longitude == self.location2.coordinate.longitude) || (self.location2.coordinate.latitude == 0 && self.location2.coordinate.longitude == 0) ){
         self.location2 = [self parseAndAssignCoordinateTo:self.location2];
     }
-    //return true;
 }
 
-/*
+/**
  *Sets up the marker and puts it on the map.
  */
 
@@ -139,7 +121,7 @@
     self.marker.map = mapView_;
 }
 
-/*
+/**
  *Parses the webpage responsible for getting the shuttle coordinates and returns it.
  */
 
@@ -161,7 +143,7 @@
     return location;
 }
 
-/*
+/**
  *This method gets the coordinates of the shuttle from Track My Truck.
  */
 
@@ -184,7 +166,7 @@
     return [[NSString alloc] initWithData:urlData encoding:NSUTF8StringEncoding];
 }
 
-/*
+/**
  *This method determines whether the shuttle is running based on the current day and time.
  */
 
@@ -217,7 +199,7 @@
     return true;
 }
 
-/*
+/**
  *This method first creates a popup that allows the user to select which shuttle to follow (only one for now)
  *Then the map centers on the shuttle and keeps it centered as it moves.
  */
@@ -231,9 +213,6 @@
                                    withTitle:@"Follow which shuttle?"
                              withStringArray:kStringArray
                                     delegate:self];
-        //want to set once follow is true
-//        [sender setTitle:@"Unfollow"];
-//        [sender setTintColor:[UIColor redColor]];
     }
     else {
         self.follow = false;
@@ -243,7 +222,7 @@
     }
 }
 
-/*
+/**
  *This method keeps the center updates when we are following a particular shuttle.
  */
 
@@ -259,7 +238,7 @@
     }
 }
 
-/*
+/**
  *This method uses PopoverView (opensource code) to create a popup for the follow shuttle option.
  */
 

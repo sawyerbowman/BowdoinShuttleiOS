@@ -14,23 +14,35 @@
 
 @class LoginViewController;
 
+//Delegate Method
+
 @protocol LoginViewControllerDelegate <NSObject>
+
 - (void)loginViewController:(LoginViewController *)controller;
 
 @end
 
+//Needs UIAlertViewDelegate for displaying alerts
+
 @interface LoginViewController : UIViewController <UIAlertViewDelegate, RequestViewControllerDelegate>
 
+//Text field to contain bowdoin id
 @property (weak, nonatomic) IBOutlet UITextField *userName;
+
+//Value to pass forward
 @property (strong, nonatomic) NSString* hashVal;
+
+//Booleans to determine whether to allow login
 @property Boolean email;
 @property Boolean success;
 
+//Delegate
 @property (nonatomic, weak) id <LoginViewControllerDelegate> delegate;
 
-- (IBAction)verifyLogin:(id)sender;
+//Sha1 hash given an input string
 - (NSString*) sha1:(NSString*)input;
 
+//Keyboard methods
 - (IBAction)textFieldReturn:(id)sender;
 - (void) hideKeyboard;
 

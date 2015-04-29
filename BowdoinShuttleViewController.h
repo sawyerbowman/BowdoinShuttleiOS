@@ -21,7 +21,6 @@
 @interface BowdoinShuttleViewController : UIViewController <PopoverViewDelegate, UITableViewDataSource, UITableViewDelegate> {
     
     PopoverView *pv;
-    
     UILabel *tapAnywhereLabel;
     CGPoint point;
 }
@@ -33,16 +32,8 @@
 @property (nonatomic, strong) CLLocation *location2;
 @property double t;
 
-//@property NSDate *start;
-//@property NSTimeInterval timeInterval;
-
 @property bool curSet;
-//@property bool testing;
-//@property bool firstTimeThrough;
 @property bool follow;
-
-//@property double rise;
-//@property double run;
 
 @property NSString *selectedShuttle;
 

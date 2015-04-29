@@ -17,6 +17,10 @@
     NSUInteger selectedIndex;
 }
 
+/**
+ *
+ */
+
 - (id)initWithStyle:(UITableViewStyle)style
 {
     self = [super initWithStyle:style];
@@ -26,32 +30,35 @@
     return self;
 }
 
+/**
+ *
+ */
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    //self.calls = [[NSMutableArray alloc] init];
-    
-    //[self getAllCalls];
-    
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
+
+/**
+ *Determines if cancel button and track buttom should appear. Gets all calls to
+ *display.
+ */
 
 -(void)viewWillAppear:(BOOL)animated {
     [self showCancelButton];
     [self getAllCalls];
 }
 
+/**
+ *
+ */
+
 - (void)viewDidUnload
 {
 
 }
 
-/*
+/**
  *This method cancels the user's call.
  */
 
@@ -80,7 +87,7 @@
     }
 }
 
-/*
+/**
  *This method checks to see if the user has a call that can be cancelled. If not,
  *the cancel call button will not be displayed.
  */
@@ -88,20 +95,23 @@
 -(void)showCancelButton{
     NSString *passUrl = [NSString stringWithFormat:@"http://shuttle.bowdoinimg.net/netdirect/call_check_d.php?bh=%@", self.hashVal];
     NSString *data = [GetRequest getDataFrom:passUrl];
-    if ([data isEqualToString:@"code=0"]){
+    
+    //If call not made, don't show any buttons
+    if ([data containsString:@"code=0"]){
         self.cancelButton.enabled = false;
         self.trackButton.enabled = false;
-        //[self.navigationItem setRightBarButtonItem:nil animated:NO];
     }
-    else {
+    //If call made, can cancel
+    else if ([data containsString:@"code=1"]) {
         self.cancelButton.enabled = true;
-        self.trackButton.enabled = true;
+        //If dispatched, can track shuttle
+        if ([data containsString:@"dispatched=1"]){
+            self.trackButton.enabled = true;
+        }
     }
 }
 
-//TODO Show Track Button when call has been made
-
-/*
+/**
  *This method is responsible for obtaining each request and reformatting them.
  */
 
@@ -112,6 +122,10 @@
     if ([data isEqualToString:@""]){
         [self.tableView reloadData];
         return;
+    }
+    else if ([data containsString:@"This van"]){
+        NSRange range = [data rangeOfString:@"This van"];
+        self.waitingCalls.text = [data substringFromIndex:range.location];
     }
     else if ([data containsString:@"There are"]){
         self.waitingCalls.text = data;
@@ -130,7 +144,7 @@
     return rawData;
 }
 
-/*
+/**
  *This method parses each line returned from the network call to the list of calls.
  *Right now, we are only displaying origin, destination, and number of passengers, as
  *multiple vans have not been implemented.
@@ -178,21 +192,38 @@
     return newRequest;
 }
 
+/**
+ *
+ */
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
+/**
+ *
+ */
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
 	return 1;
 }
+
+/**
+ *
+ */
+
 - (NSInteger)tableView:(UITableView *)tableView
  numberOfRowsInSection:(NSInteger)section
 {
     return [self.calls count];
 }
+
+/**
+ *
+ */
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -200,13 +231,14 @@
                              dequeueReusableCellWithIdentifier:@"CallListCell"];
     NSString* finalText = [[((Request*)[self.calls objectAtIndex:indexPath.row]).origin stringByAppendingString:@" to "] stringByAppendingString:((Request*)[self.calls objectAtIndex:indexPath.row]).destination];
 	cell.textLabel.text = finalText;
-//	if (indexPath.row == selectedIndex)
-//		cell.accessoryType =
-//        UITableViewCellAccessoryCheckmark;
-//	else
+
     cell.accessoryType = UITableViewCellAccessoryNone;
 	return cell;
 }
+
+/**
+ *
+ */
 
 - (void)tableView:(UITableView *)tableView
 didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -221,17 +253,17 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 	}
 	selectedIndex = indexPath.row;
 	UITableViewCell *cell = [tableView cellForRowAtIndexPath:indexPath];
-	//cell.accessoryType = UITableViewCellAccessoryCheckmark;
-	//NSString *theDestination = [destinations objectAtIndex:indexPath.row];
 }
 
-//delegate method
+/**
+ *Delegate method to return from shuttle tracker view
+ */
 
 - (void)bowdoinShuttleViewController:(BowdoinShuttleViewController *)controller{
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-/*
+/**
  *This method selects the next page to display depending on the button clicked.
  */
 
@@ -245,7 +277,9 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath
     
 }
 
-//calls the proper segue when the button is clicked
+/**
+ *Performs the track shuttle segue when navigation button is clicked
+ */
 
 - (IBAction)trackShuttle:(id)sender {
     [self performSegueWithIdentifier:@"TrackShuttle" sender:sender];

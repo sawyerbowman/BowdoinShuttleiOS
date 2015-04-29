@@ -14,6 +14,10 @@
 
 @implementation SelectShuttleViewController
 
+/**
+ *
+ */
+
 - (id)initWithStyle:(UITableViewStyle)style
 {
     if ([super initWithStyle:style] != nil){
@@ -51,6 +55,10 @@
     return self;
 }
 
+/**
+ *
+ */
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -62,27 +70,39 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
+/**
+ *
+ */
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-#pragma mark - Table view data source
+/**
+ *
+ */
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
     return 1;
 }
 
+/**
+ *
+ */
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
     return [self.shuttles count];
 }
+
+/**
+ *
+ */
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -98,6 +118,10 @@
     
     return cell;
 }
+
+/**
+ *Returns to map view controller once a shuttle has been selected
+ */
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
